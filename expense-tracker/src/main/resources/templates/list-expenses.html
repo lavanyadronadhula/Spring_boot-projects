@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Expenses</title>
+</head>
+<body>
+    <h2>Expense List</h2>
+
+    <a href="/expenses/new">Add New Expense</a>
+	
+	<p>
+	    <strong>Total Expense:</strong> ₹<span th:text="${totalExpense}"></span>
+	</p>
+
+
+    <!-- 🔍 Filter by Category -->
+    <form action="/expenses/category" method="get">
+        <label>Category:</label>
+        <input type="text" name="category" placeholder="e.g., Food" />
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- 🗓 Filter by Date Range -->
+    <form action="/expenses/dates" method="get">
+        <label>From:</label>
+        <input type="date" name="from" />
+        <label>To:</label>
+        <input type="date" name="to" />
+        <button type="submit">Filter by Date</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="expense : ${expenses}">
+            <td th:text="${expense.title}"></td>
+            <td th:text="${expense.amount}"></td>
+            <td th:text="${expense.category}"></td>
+            <td th:text="${expense.date}"></td>
+            <td>
+                <a th:href="@{/expenses/delete/{id}(id=${expense.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
